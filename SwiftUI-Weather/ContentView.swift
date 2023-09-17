@@ -7,7 +7,40 @@
 
 import SwiftUI
 
+struct DayTemperature {
+  var day: String
+  var icon: String
+  var temp: Int
+
+    init(day: String, icon: String, temp: Int) {
+        self.day = day
+        self.icon = icon
+        self.temp = temp
+    }
+}
 struct ContentView: View {
+    let fiveDaysTemperatures: [DayTemperature] = [
+        DayTemperature(
+            day: "TUE",
+            icon: "cloud.sun.fill",
+            temp: 74),
+        DayTemperature(
+            day: "WED",
+            icon: "sun.max.fill",
+            temp: 88),
+        DayTemperature(
+            day: "THU",
+            icon: "wind.snow",
+            temp: 55),
+        DayTemperature(
+            day: "FRI",
+            icon: "sunset.fill",
+            temp: 60),
+        DayTemperature(
+            day: "SAT",
+            icon: "snow",
+            temp: -12)
+    ]
     
     @State private var isNight = false
     
@@ -19,27 +52,14 @@ struct ContentView: View {
                 MainWeatherStatusView(isNight: $isNight)
                 
                 HStack(spacing: 20) {
-                    WeatherDayView(
-                        dayOfWeek: "TUE",
-                        imageName: "cloud.sun.fill",
-                        temperature: 74)
-                    WeatherDayView(
-                        dayOfWeek: "WED",
-                        imageName: "sun.max.fill",
-                        temperature: 88)
-                    WeatherDayView(
-                        dayOfWeek: "THU",
-                        imageName: "wind.snow",
-                        temperature: 55)
-                    WeatherDayView(
-                        dayOfWeek: "FRI",
-                        imageName: "sunset.fill",
-                        temperature: 60)
-                    WeatherDayView(
-                        dayOfWeek: "SAT",
-                        imageName: "snow",
-                        temperature: -11)
+                    for day in fiveDaysTemperatures {
+                        WeatherDayView(
+                            dayOfWeek: day.day,
+                            imageName: day.icon,
+                            temperature: day.temp)
+                    }
                 }
+                
                 Spacer()
                 Button {
                     print("tapped")
@@ -47,11 +67,10 @@ struct ContentView: View {
                 } label: {
                     WeatherButton(
                         title: "Change Day Time",
-                        textColor: .blue,
-                        backgroundColor: .white)
+                        textColor: .white,
+                        backgroundColor: .mint )
                 }
                 Spacer()
-                    
             }
         }
     }
