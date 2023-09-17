@@ -7,16 +7,12 @@
 
 import SwiftUI
 
-struct DayTemperature {
+struct DayTemperature: Identifiable {
+  var id = UUID() // You can use UUID as the identifier
   var day: String
   var icon: String
   var temp: Int
 
-    init(day: String, icon: String, temp: Int) {
-        self.day = day
-        self.icon = icon
-        self.temp = temp
-    }
 }
 struct ContentView: View {
     let fiveDaysTemperatures: [DayTemperature] = [
@@ -39,7 +35,7 @@ struct ContentView: View {
         DayTemperature(
             day: "SAT",
             icon: "snow",
-            temp: -12)
+            temp: -1)
     ]
     
     @State private var isNight = false
@@ -52,7 +48,7 @@ struct ContentView: View {
                 MainWeatherStatusView(isNight: $isNight)
                 
                 HStack(spacing: 20) {
-                    for day in fiveDaysTemperatures {
+                    ForEach(fiveDaysTemperatures) { day in
                         WeatherDayView(
                             dayOfWeek: day.day,
                             imageName: day.icon,
